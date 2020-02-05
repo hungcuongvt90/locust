@@ -459,7 +459,7 @@ class MasterLocustRunner(DistributedLocustRunner):
                     c = self.clients[msg.node_id]
                     c.heartbeat = self.heartbeat_liveness
                     c.state = msg.data['state']
-                    c.cpu_usage = msg.data['current_cpu_usage']
+                    c.cpu_usage = msg.data.get('current_cpu_usage', 0)
                     if not c.cpu_warning_emitted and c.cpu_usage > 90:
                         self.slave_cpu_warning_emitted = True # used to fail the test in the end
                         c.cpu_warning_emitted = True          # used to suppress logging for this node
